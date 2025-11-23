@@ -21,13 +21,13 @@ Kotlin Multiplatform + Compose Multiplatform을 사용한 오프라인-퍼스트
 
 ---
 
-### 2단계: 데이터 모델 구현
+### 2단계: 데이터 모델 구현 ✅
 
 #### 2.1 `Note.kt` 생성
-- [ ] Note 데이터 클래스 생성
-- [ ] 필드: `id`, `title`, `content`, `createdAt`, `updatedAt`
-- [ ] `@Serializable` 어노테이션 적용
-- [ ] `updatedAt` 자동 갱신 로직 포함
+- [x] Note 데이터 클래스 생성
+- [x] 필드: `id`, `title`, `content`, `createdAt`, `updatedAt`
+- [x] `@Serializable` 어노테이션 적용
+- [x] `updatedAt` 자동 갱신 로직 포함
 
 ---
 
@@ -154,3 +154,4 @@ commonMain/kotlin/com/myapplication/
 
 - **2024-12-XX**: 작업 계획서 생성
 - **2024-12-XX**: 1단계 완료 - 프로젝트 설정 및 의존성 추가 (kotlinx.serialization, kotlinx.datetime, Material Icons)
+- **2024-12-XX**: 2단계 완료 - 데이터 모델 구현 (Note.kt)
