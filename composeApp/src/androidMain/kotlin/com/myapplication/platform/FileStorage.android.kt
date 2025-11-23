@@ -27,15 +27,16 @@ actual class FileStorage {
     /**
      * 저장소 디렉토리 경로 가져오기
      * Android의 경우 내부 저장소 사용
+     * Context를 가져올 수 없으면 예외를 던져서 호출자가 처리하도록 함
      */
     private fun getStorageDir(): File {
         try {
             val context = getContext()
-            // 내부 저장소의 files 디렉토리 사용
+            // 내부 저장소의 files 디렉토리 사용 (항상 존재함)
             return context.filesDir
         } catch (e: Exception) {
-            // Context를 가져올 수 없으면 임시 디렉토리 사용
-            return File(System.getProperty("java.io.tmpdir") ?: "/tmp")
+            // Context를 가져올 수 없으면 예외를 던져서 호출자가 처리하도록 함
+            throw IllegalStateException("Cannot obtain Android Context for file storage", e)
         }
     }
     
@@ -53,16 +54,10 @@ actual class FileStorage {
     }
     
     actual suspend fun writeFile(fileName: String, content: String) = withContext(Dispatchers.IO) {
-        try {
-            val dir = getStorageDir()
-            if (!dir.exists()) {
-                dir.mkdirs()
-            }
-            val file = File(dir, fileName)
-            file.writeText(content)
-        } catch (e: Exception) {
-            // 에러 처리 (나중에 로깅 추가)
-        }
+        // context.filesDir는 항상 존재하므로 디렉토리 확인 불필요
+        val file = File(getStorageDir(), fileName)
+        file.writeText(content)
+        // 예외가 발생하면 호출자에게 전파됨
     }
     
     actual suspend fun fileExists(fileName: String): Boolean = withContext(Dispatchers.IO) {

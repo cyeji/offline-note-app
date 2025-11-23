@@ -36,16 +36,10 @@ actual class FileStorage {
     }
     
     actual suspend fun writeFile(fileName: String, content: String) = withContext(Dispatchers.IO) {
-        try {
-            val dir = getStorageDir()
-            if (!dir.exists()) {
-                dir.mkdirs()
-            }
-            val file = File(dir, fileName)
-            file.writeText(content)
-        } catch (e: Exception) {
-            // 에러 처리 (나중에 로깅 추가)
-        }
+        // getStorageDir()에서 이미 디렉토리 생성 확인하므로 중복 확인 불필요
+        val file = File(getStorageDir(), fileName)
+        file.writeText(content)
+        // 예외가 발생하면 호출자에게 전파됨
     }
     
     actual suspend fun fileExists(fileName: String): Boolean = withContext(Dispatchers.IO) {
