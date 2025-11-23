@@ -31,19 +31,19 @@ Kotlin Multiplatform + Compose Multiplatform을 사용한 오프라인-퍼스트
 
 ---
 
-### 3단계: 파일 저장소 구현 (플랫폼별)
+### 3단계: 파일 저장소 구현 (플랫폼별) ✅
 
 #### 3.1 `FileStorage.kt` (expect) 생성
-- [ ] 공통 인터페이스 정의
-- [ ] 메서드: `readFile()`, `writeFile()`, `fileExists()`
+- [x] 공통 인터페이스 정의
+- [x] 메서드: `readFile()`, `writeFile()`, `fileExists()`
 
 #### 3.2 Android 구현 (`FileStorage.android.kt`)
-- [ ] Context를 사용한 파일 저장소 구현
-- [ ] 내부 저장소에 `notes.json` 저장
+- [x] Context를 사용한 파일 저장소 구현
+- [x] 내부 저장소에 `notes.json` 저장
 
 #### 3.3 Desktop 구현 (`FileStorage.desktop.kt`)
-- [ ] JVM 파일 시스템 API 사용
-- [ ] 프로젝트 루트 또는 사용자 디렉토리에 저장
+- [x] JVM 파일 시스템 API 사용
+- [x] 프로젝트 루트 또는 사용자 디렉토리에 저장
 
 ---
 
@@ -155,3 +155,4 @@ commonMain/kotlin/com/myapplication/
 - **2024-12-XX**: 작업 계획서 생성
 - **2024-12-XX**: 1단계 완료 - 프로젝트 설정 및 의존성 추가 (kotlinx.serialization, kotlinx.datetime, Material Icons)
 - **2024-12-XX**: 2단계 완료 - 데이터 모델 구현 (Note.kt)
+- **2024-12-XX**: 3단계 완료 - 플랫폼별 파일 저장소 구현 (FileStorage expect/actual)
