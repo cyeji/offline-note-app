@@ -36,6 +36,7 @@ fun NoteEditorScreen(
     var title by remember { mutableStateOf(existingNote?.title ?: "") }
     var content by remember { mutableStateOf(existingNote?.content ?: "") }
     var isSaving by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
     
     Scaffold(
         topBar = {
@@ -52,15 +53,22 @@ fun NoteEditorScreen(
                             if (title.isNotBlank() || content.isNotBlank()) {
                                 scope.launch {
                                     isSaving = true
-                                    if (existingNote == null) {
-                                        // 새 노트 생성
-                                        notesRepository.createNote(title, content)
-                                    } else {
-                                        // 기존 노트 업데이트
-                                        notesRepository.updateNote(noteId, title, content)
+                                    errorMessage = null
+                                    try {
+                                        if (existingNote == null) {
+                                            // 새 노트 생성
+                                            notesRepository.createNote(title, content)
+                                        } else {
+                                            // 기존 노트 업데이트
+                                            notesRepository.updateNote(noteId, title, content)
+                                        }
+                                        isSaving = false
+                                        onBack()
+                                    } catch (e: Exception) {
+                                        isSaving = false
+                                        errorMessage = "저장 실패: ${e.message ?: "알 수 없는 오류"}"
+                                        e.printStackTrace()
                                     }
-                                    isSaving = false
-                                    onBack()
                                 }
                             }
                         },
@@ -85,6 +93,31 @@ fun NoteEditorScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+            // 에러 메시지 표시
+            errorMessage?.let { message ->
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.errorContainer
+                    )
+                ) {
+                    Text(
+                        text = message,
+                        modifier = Modifier.padding(16.dp),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onErrorContainer
+                    )
+                }
+                
+                // 3초 후 메시지 자동 제거
+                LaunchedEffect(message) {
+                    kotlinx.coroutines.delay(3000)
+                    errorMessage = null
+                }
+            }
+            
             // 제목 입력 필드
             OutlinedTextField(
                 value = title,

@@ -226,7 +226,7 @@ fun NoteItem(
  * 타임스탬프를 읽기 쉬운 형식으로 변환
  */
 private fun formatTimestamp(timestamp: Long): String {
-    val now = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+    val now = System.currentTimeMillis()
     val diff = now - timestamp
     
     return when {
