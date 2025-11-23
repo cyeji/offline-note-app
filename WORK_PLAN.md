@@ -57,14 +57,14 @@ Kotlin Multiplatform + Compose Multiplatform을 사용한 오프라인-퍼스트
 
 ---
 
-### 5단계: 동기화 서비스 구현
+### 5단계: 동기화 서비스 구현 ✅
 
 #### 5.1 `SyncService.kt` 생성
-- [ ] Last-Write-Wins(LWW) 로직 구현
-- [ ] Push: 로컬 → `server.json`
-- [ ] Pull: `server.json` → 로컬
-- [ ] 충돌 시 `updatedAt` 비교로 해결
-- [ ] Fake 서버는 로컬 파일 기반
+- [x] Last-Write-Wins(LWW) 로직 구현
+- [x] Push: 로컬 → `server.json`
+- [x] Pull: `server.json` → 로컬
+- [x] 충돌 시 `updatedAt` 비교로 해결
+- [x] Fake 서버는 로컬 파일 기반
 
 ---
 
@@ -157,3 +157,4 @@ commonMain/kotlin/com/myapplication/
 - **2024-12-XX**: 2단계 완료 - 데이터 모델 구현 (Note.kt)
 - **2024-12-XX**: 3단계 완료 - 플랫폼별 파일 저장소 구현 (FileStorage expect/actual)
 - **2024-12-XX**: 4단계 완료 - 저장소 계층 구현 (NotesRepository)
+- **2024-12-XX**: 5단계 완료 - 동기화 서비스 구현 (SyncService with LWW)
