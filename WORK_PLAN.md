@@ -68,25 +68,25 @@ Kotlin Multiplatform + Compose Multiplatform을 사용한 오프라인-퍼스트
 
 ---
 
-### 6단계: UI 컴포넌트 구현
+### 6단계: UI 컴포넌트 구현 ✅
 
 #### 6.1 `NoteListScreen.kt` 생성
-- [ ] 노트 목록 표시
-- [ ] FloatingActionButton으로 노트 생성
-- [ ] 노트 클릭 시 편집 화면 이동
-- [ ] 삭제 기능 (스와이프 또는 버튼)
-- [ ] Sync 버튼 (상단)
+- [x] 노트 목록 표시
+- [x] FloatingActionButton으로 노트 생성
+- [x] 노트 클릭 시 편집 화면 이동
+- [x] 삭제 기능 (스와이프 또는 버튼)
+- [x] Sync 버튼 (상단)
 
 #### 6.2 `NoteEditorScreen.kt` 생성
-- [ ] 제목/내용 편집 UI
-- [ ] 저장/취소 버튼
-- [ ] 새 노트 생성 모드
-- [ ] 기존 노트 수정 모드
+- [x] 제목/내용 편집 UI
+- [x] 저장/취소 버튼
+- [x] 새 노트 생성 모드
+- [x] 기존 노트 수정 모드
 
 #### 6.3 `App.kt` 수정
-- [ ] 네비게이션 구조 구현
-- [ ] `NoteListScreen`을 메인 화면으로 설정
-- [ ] 상태 관리 (ViewModel 또는 State)
+- [x] 네비게이션 구조 구현
+- [x] `NoteListScreen`을 메인 화면으로 설정
+- [x] 상태 관리 (ViewModel 또는 State)
 
 ---
 
@@ -158,3 +158,4 @@ commonMain/kotlin/com/myapplication/
 - **2024-12-XX**: 3단계 완료 - 플랫폼별 파일 저장소 구현 (FileStorage expect/actual)
 - **2024-12-XX**: 4단계 완료 - 저장소 계층 구현 (NotesRepository)
 - **2024-12-XX**: 5단계 완료 - 동기화 서비스 구현 (SyncService with LWW)
+- **2024-12-XX**: 6단계 완료 - UI 컴포넌트 구현 (NoteListScreen, NoteEditorScreen, App.kt)
