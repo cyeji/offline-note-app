@@ -1,12 +1,15 @@
 package com.myapplication.ui
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.focusable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
 import com.myapplication.data.NotesRepository
 import kotlinx.coroutines.launch
@@ -37,6 +40,16 @@ fun NoteEditorScreen(
     var content by remember { mutableStateOf(existingNote?.content ?: "") }
     var isSaving by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+    
+    // 포커스 요청자 (새 노트 생성 시 제목 필드에 자동 포커스)
+    val titleFocusRequester = remember { FocusRequester() }
+    
+    // 새 노트 생성 시 제목 필드에 자동 포커스
+    LaunchedEffect(existingNote) {
+        if (existingNote == null) {
+            titleFocusRequester.requestFocus()
+        }
+    }
     
     Scaffold(
         topBar = {
@@ -124,9 +137,12 @@ fun NoteEditorScreen(
                 onValueChange = { title = it },
                 label = { Text("제목") },
                 placeholder = { Text("노트 제목을 입력하세요") },
+                enabled = !isSaving,
+                readOnly = false,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(16.dp)
+                    .focusRequester(titleFocusRequester),
                 singleLine = true
             )
             
@@ -136,6 +152,8 @@ fun NoteEditorScreen(
                 onValueChange = { content = it },
                 label = { Text("내용") },
                 placeholder = { Text("노트 내용을 입력하세요") },
+                enabled = !isSaving,
+                readOnly = false,
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
