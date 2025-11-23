@@ -45,6 +45,12 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            // Ktor 클라이언트 (Android용)
+            implementation(libs.ktor.client.android)
+            // Serialization (Android용)
+            implementation(libs.kotlinx.serialization.json)
+            // Ktor serialization (Android용)
+            implementation(libs.ktor.serialization.kotlinx.json)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -58,6 +64,9 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.datetime)
             implementation(compose.materialIconsExtended)
+            // Ktor 클라이언트 (공통)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -66,6 +75,19 @@ kotlin {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutinesSwing)
             implementation(libs.kotlinx.datetime)
+            // Ktor 서버 (Desktop용)
+            implementation(libs.ktor.server.core)
+            implementation(libs.ktor.server.netty)
+            implementation(libs.ktor.server.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            // Ktor 클라이언트 (Desktop용)
+            implementation(libs.ktor.client.cio)
+            // Ktor serialization (Desktop 클라이언트용)
+            implementation(libs.ktor.serialization.kotlinx.json)
+        }
+        androidMain.dependencies {
+            // Ktor 클라이언트 (Android용)
+            implementation(libs.ktor.client.android)
         }
     }
 }

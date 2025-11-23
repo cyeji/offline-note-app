@@ -35,10 +35,10 @@ fun NoteListScreen(
     var isSyncing by remember { mutableStateOf(false) }
     var syncMessage by remember { mutableStateOf<String?>(null) }
     
-    // 초기 로드
-    LaunchedEffect(Unit) {
-        notesRepository.loadNotes()
-    }
+    // 초기 로드는 App.kt에서 서버에서 Pull하므로 여기서는 불필요
+    // LaunchedEffect(Unit) {
+    //     notesRepository.loadNotes()
+    // }
     
     Scaffold(
         topBar = {

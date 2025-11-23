@@ -18,6 +18,9 @@ class NotesRepository(
     private val _notes = MutableStateFlow<List<Note>>(emptyList())
     val notes: StateFlow<List<Note>> = _notes.asStateFlow()
     
+    // 자동 동기화를 위한 콜백
+    var onNotesChanged: (suspend () -> Unit)? = null
+    
     private val json = Json {
         prettyPrint = true
         ignoreUnknownKeys = true
@@ -48,6 +51,8 @@ class NotesRepository(
         try {
             val jsonString = json.encodeToString(_notes.value)
             fileStorage.writeFile(fileName, jsonString)
+            // 변경사항 발생 시 즉시 서버로 Push하고 Pull
+            onNotesChanged?.invoke()
         } catch (e: Exception) {
             // 예외가 발생하면 호출자에게 전파됨
             throw e
@@ -103,5 +108,35 @@ class NotesRepository(
      */
     fun getAllNotes(): List<Note> {
         return _notes.value
+    }
+    
+    /**
+     * 노트를 직접 추가 (동기화용, ID 유지)
+     */
+    suspend fun addNoteDirectly(note: Note) {
+        // 이미 존재하는 노트는 추가하지 않음
+        if (_notes.value.any { it.id == note.id }) {
+            return
+        }
+        _notes.value = _notes.value + note
+        saveNotes()
+    }
+    
+    /**
+     * 병합된 노트 목록으로 전체 교체 (동기화용)
+     * 동기화로 인한 변경이므로 자동 Push는 하지 않음
+     */
+    suspend fun replaceAllNotes(notes: List<Note>) {
+        val oldCallback = onNotesChanged
+        onNotesChanged = null // 자동 동기화 비활성화
+        _notes.value = notes
+        try {
+            val jsonString = json.encodeToString(_notes.value)
+            fileStorage.writeFile(fileName, jsonString)
+        } catch (e: Exception) {
+            throw e
+        } finally {
+            onNotesChanged = oldCallback // 자동 동기화 재활성화
+        }
     }
 }
