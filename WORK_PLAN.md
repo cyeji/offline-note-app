@@ -90,15 +90,15 @@ Kotlin Multiplatform + Compose Multiplatform을 사용한 오프라인-퍼스트
 
 ---
 
-### 7단계: 플랫폼별 진입점 확인
+### 7단계: 플랫폼별 진입점 확인 ✅
 
 #### 7.1 Android
-- [ ] `MainActivity.kt` 확인 및 수정
-- [ ] `FileStorage`에 Context 전달
+- [x] `MainActivity.kt` 확인 및 수정 (App() 호출 확인)
+- [x] `FileStorage`에 Context 전달 (Application Context 사용)
 
 #### 7.2 Desktop
-- [ ] `jvmMain/main.kt` 확인 및 수정
-- [ ] 파일 경로 설정
+- [x] `jvmMain/main.kt` 확인 및 수정 (App() 호출 확인)
+- [x] 파일 경로 설정 (사용자 홈 디렉토리 `.note-app` 사용)
 
 ---
 
@@ -159,3 +159,4 @@ commonMain/kotlin/com/myapplication/
 - **2024-12-XX**: 4단계 완료 - 저장소 계층 구현 (NotesRepository)
 - **2024-12-XX**: 5단계 완료 - 동기화 서비스 구현 (SyncService with LWW)
 - **2024-12-XX**: 6단계 완료 - UI 컴포넌트 구현 (NoteListScreen, NoteEditorScreen, App.kt)
+- **2024-12-XX**: 7단계 완료 - 플랫폼별 진입점 확인 (MainActivity.kt, main.kt 확인 완료)
