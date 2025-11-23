@@ -1,49 +1,58 @@
 package com.myapplication
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import com.myapplication.data.NotesRepository
+import com.myapplication.data.SyncService
+import com.myapplication.platform.FileStorage
+import com.myapplication.ui.NoteEditorScreen
+import com.myapplication.ui.NoteListScreen
 
-import note_app.composeapp.generated.resources.Res
-import note_app.composeapp.generated.resources.compose_multiplatform
-
+/**
+ * 메인 앱 컴포저블
+ * 노트 목록과 편집 화면 간 네비게이션 관리
+ */
 @Composable
-@Preview
 fun App() {
     MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer)
-                .safeContentPadding()
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
+        // 파일 저장소 및 저장소 초기화
+        val fileStorage = remember { FileStorage() }
+        val notesRepository = remember { NotesRepository(fileStorage) }
+        val syncService = remember { SyncService(fileStorage, notesRepository) }
+        
+        // 네비게이션 상태 관리
+        var currentScreen by remember { mutableStateOf<Screen>(Screen.NoteList) }
+        var selectedNoteId by remember { mutableStateOf<String?>(null) }
+        
+        when (currentScreen) {
+            is Screen.NoteList -> {
+                NoteListScreen(
+                    notesRepository = notesRepository,
+                    syncService = syncService,
+                    onNoteClick = { noteId ->
+                        selectedNoteId = noteId
+                        currentScreen = Screen.NoteEditor(noteId)
+                    }
+                )
             }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
-                }
+            is Screen.NoteEditor -> {
+                NoteEditorScreen(
+                    noteId = selectedNoteId ?: "",
+                    notesRepository = notesRepository,
+                    onBack = {
+                        currentScreen = Screen.NoteList
+                        selectedNoteId = null
+                    }
+                )
             }
         }
     }
+}
+
+/**
+ * 화면 상태를 나타내는 sealed class
+ */
+sealed class Screen {
+    object NoteList : Screen()
+    data class NoteEditor(val noteId: String) : Screen()
 }

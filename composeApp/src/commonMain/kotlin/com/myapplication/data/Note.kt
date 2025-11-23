@@ -1,6 +1,5 @@
 package com.myapplication.data
 
-import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 /**
@@ -26,7 +25,7 @@ data class Note(
         return copy(
             title = title,
             content = content,
-            updatedAt = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+            updatedAt = System.currentTimeMillis()
         )
     }
     
@@ -35,7 +34,7 @@ data class Note(
          * 새 노트 생성
          */
         fun create(title: String, content: String): Note {
-            val now = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+            val now = System.currentTimeMillis()
             return Note(
                 id = generateId(),
                 title = title,
@@ -50,7 +49,7 @@ data class Note(
          * 타임스탬프와 랜덤 숫자를 조합하여 충돌 가능성을 최소화
          */
         private fun generateId(): String {
-            val timestamp = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+            val timestamp = System.currentTimeMillis()
             val random = (0..999999).random() // 충돌 가능성 감소를 위해 범위 확대
             return "$timestamp-$random"
         }
