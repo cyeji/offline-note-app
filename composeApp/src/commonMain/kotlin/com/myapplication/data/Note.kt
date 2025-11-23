@@ -46,10 +46,13 @@ data class Note(
         }
         
         /**
-         * 고유 ID 생성 (간단한 UUID 스타일)
+         * 고유 ID 생성
+         * 타임스탬프와 랜덤 숫자를 조합하여 충돌 가능성을 최소화
          */
         private fun generateId(): String {
-            return "${System.currentTimeMillis()}-${(0..9999).random()}"
+            val timestamp = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+            val random = (0..999999).random() // 충돌 가능성 감소를 위해 범위 확대
+            return "$timestamp-$random"
         }
     }
 }
