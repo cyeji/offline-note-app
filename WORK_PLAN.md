@@ -47,13 +47,13 @@ Kotlin Multiplatform + Compose Multiplatform을 사용한 오프라인-퍼스트
 
 ---
 
-### 4단계: 저장소 계층 구현
+### 4단계: 저장소 계층 구현 ✅
 
 #### 4.1 `NotesRepository.kt` 생성
-- [ ] CRUD 메서드 구현
-- [ ] JSON 직렬화/역직렬화 로직
-- [ ] 파일 저장소 연동
-- [ ] `updatedAt` 자동 갱신 로직
+- [x] CRUD 메서드 구현
+- [x] JSON 직렬화/역직렬화 로직
+- [x] 파일 저장소 연동
+- [x] `updatedAt` 자동 갱신 로직
 
 ---
 
@@ -156,3 +156,4 @@ commonMain/kotlin/com/myapplication/
 - **2024-12-XX**: 1단계 완료 - 프로젝트 설정 및 의존성 추가 (kotlinx.serialization, kotlinx.datetime, Material Icons)
 - **2024-12-XX**: 2단계 완료 - 데이터 모델 구현 (Note.kt)
 - **2024-12-XX**: 3단계 완료 - 플랫폼별 파일 저장소 구현 (FileStorage expect/actual)
+- **2024-12-XX**: 4단계 완료 - 저장소 계층 구현 (NotesRepository)
